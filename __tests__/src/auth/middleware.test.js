@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../supergoose.js');
+require('../../supergoose');
 const auth = require('../../../src/auth/middleware.js');
 const User = require('../../../src/auth/users-model.js');
 
@@ -10,9 +10,9 @@ let users = {
   user: {username: 'user', password: 'password', role: 'user'},
 };
 
-beforeAll(() => {
+beforeAll(async () => {
   return Promise.all(
-    Object.values(users).map(user => new User(user).save())
+    Object.values(users).map((user) => new User(user).save())
   );
 });
 
@@ -23,12 +23,11 @@ describe('Auth Middleware', () => {
   
   let errorObject = {"message": "Invalid User ID/Password", "status": 401, "statusMessage": "Unauthorized"};
   
-  describe('user authentication', () => {
+  describe.only('user authentication', () => {
     
     let cachedToken;
 
-    it('fails a login for a user (admin) with the incorrect basic credentials', () => {
-
+    it('fails a login for a user (admin) with the incorrect basic credentials', async () => {
       let req = {
         headers: {
           authorization: 'Basic YWRtaW46Zm9v',
@@ -45,8 +44,7 @@ describe('Auth Middleware', () => {
 
     }); // it()
 
-    it('logs in an admin user with the right credentials', () => {
-
+    it('logs in an admin user with the right credentials', async () => {
       let req = {
         headers: {
           authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',

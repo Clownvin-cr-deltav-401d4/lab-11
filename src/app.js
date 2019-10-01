@@ -9,6 +9,9 @@ const morgan = require('morgan');
 const errorHandler = require( './middleware/error.js');
 const notFound = require( './middleware/404.js' );
 
+const books = require('./routes/books');
+const router = require('./auth/router');
+
 // Prepare the express app
 const app = express();
 
@@ -18,6 +21,9 @@ app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+app.use(router);
+app.use(books);
 
 // Catchalls
 app.use(notFound);

@@ -8,6 +8,9 @@ router.get('/books/:id', handleGetOne);
 
 // Route Handlers
 function handleGetAll(req, res, next) {
+  if (!req.token) {
+    res.status(401).json({status: 401, statusMessage: 'Unauthorized', message: 'Invalid User ID/Password'});
+  }
   let books = {
     count: 3,
     results: [
@@ -20,6 +23,9 @@ function handleGetAll(req, res, next) {
 }
 
 function handleGetOne(req, res, next) {
+  if (!req.token) {
+    res.status(401).json({status: 401, statusMessage: 'Unauthorized', message: 'Invalid User ID/Password'});
+  }
   let book = {
     title:'Moby Dick',
   };
