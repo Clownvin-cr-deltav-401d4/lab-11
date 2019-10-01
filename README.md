@@ -1,32 +1,31 @@
-# LAB - 8-9
+# LAB - 11
 
-## Routes and Supergoose tests - JSDoc and Swagger
+## JWT and Bcrypt
 
 ### Author: Calvin Hall
 
 ### Links and Resources
-* [submission PR](https://github.com/Clownvin-cr-deltav-401d4/lab-08/pull/1)
-* [travis](https://www.travis-ci.com/Clownvin-cr-deltav-401d4/lab-08)
-* [back-end](https://clownvins-lab-9.herokuapp.com/api/v1)
+* [submission PR](https://github.com/Clownvin-cr-deltav-401d4/lab-11/pull/1)
+* [travis](https://www.travis-ci.com/Clownvin-cr-deltav-401d4/lab-11)
 
 ## Modules
-### v1router
-Exports a router which handles all routes, assuming that the appendModel middleware has run and attached a model to use to each request. All the APIs below use this router, but support their own model which works separately from eachother.
-### categories-routes
-Exports an express Routes object, with routes for:
-* GET /api/v1/categories - Returns all categories
-* GET /api/v1/categories/:id - Returns the category with id
-* POST /api/v1/categories - Creates a new category
-* PUT /api/v1/categories/:id - Updates a category with id
-* DELETE /api/v1/categories/:id - Deletes a category with id
+### Middleware
+Exports a single function which will authenticate a request, and append a web token if it is authorized.
 
-### products-routes
-Exports an express Routes object, with routes for:
-* GET /api/v1/products - Returns all products
-* GET /api/v1/products/:id - Returns the product with id
-* POST /api/v1/products - Creates a new product
-* PUT /api/v1/products/:id - Updates a product with id
-* DELETE /api/v1/products/:id - Deletes a product with id
+### Router
+Handles /signup and /signin post requests.
+
+### users-model
+Creates and exports a mongoose model for users.
+
+### 404
+Handles 404s
+
+### Error
+Handles errors.
+
+### books
+Handles GET /books and /books/:id
 
 #### Running the app
 * `npm run start`
