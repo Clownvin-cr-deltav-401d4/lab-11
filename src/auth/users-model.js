@@ -21,6 +21,10 @@ users.pre('save', async function() {
   }
 });
 
+/**
+ * Verifies a "Basic" authentication by checking that the password matches the stored password
+ * @auth the auth string (username:password)
+ */
 users.statics.authenticateBasic = async function(auth) {
   let query = {username:auth[0]};
   let user = await this.findOne(query).catch(console.error);
@@ -31,12 +35,18 @@ users.statics.authenticateBasic = async function(auth) {
   }
 };
 
-// Compare a plain text password against the hashed one we have saved
+/**
+ * Compare a plain text password against the hashed one we have saved
+ * @password compares this user documents password to the passed in password
+ * @returns true if they match, false if not
+*/
 users.methods.comparePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
 
-// Generate a JWT from the user id and a secret
+/**
+ * Generates a new JWT for this user.
+ */
 users.methods.generateToken = function() {
   let tokenData = {
     id:this._id,

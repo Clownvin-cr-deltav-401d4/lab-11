@@ -2,7 +2,13 @@
 
 const User = require('./users-model.js');
 
-module.exports = (req, res, next) => {
+/**
+ * Authenticates a request via various means.
+ * @param {*} req the request that needs authenticated
+ * @param {*} res the response
+ * @param {*} next function to call the next middleware
+ */
+const authenticate = (req, res, next) => {
 
   try {
 
@@ -47,3 +53,5 @@ module.exports = (req, res, next) => {
   }
 
 };
+
+module.exports = authenticate;
