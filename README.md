@@ -27,8 +27,11 @@ Handles errors.
 ### books
 Handles GET /books and /books/:id
 
-#### Running the app
+## Running the app
 * `npm run start`
   
-#### Tests
+## Tests
 * `npm test`
+
+## UML
+* ["UML"](https://i.imgur.com/mGDfpzp.jpg)
