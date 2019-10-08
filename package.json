@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "lint": "eslint '**/*.js'",
     "watch": "nodemon index.js",
     "test-watch": "jest --watchAll",
     "test": "jest"
@@ -30,5 +31,8 @@
     "require-directory": "^2.1.1",
     "supertest": "^3.3.0",
     "swagger-ui-express": "^4.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1"
   }
 }

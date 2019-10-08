@@ -1,6 +1,11 @@
 'use strict';
 
+const jwt = require('jsonwebtoken');
+
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+require('dotenv').config();
 
 const users = new mongoose.Schema({
   username: {type: String, required: true, unique: true},
@@ -16,19 +21,32 @@ users.pre('save', async function() {
   }
 });
 
-users.statics.authenticateBasic = function(auth) {
-  let query = {username:auth.username};
-  return this.findOne(query)
-    .then(user => user && user.comparePassword(auth.password))
-    .catch(console.error);
+/**
+ * Verifies a "Basic" authentication by checking that the password matches the stored password
+ * @auth the auth string (username:password)
+ */
+users.statics.authenticateBasic = async function(auth) {
+  let query = {username:auth[0]};
+  let user = await this.findOne(query).catch(console.error);
+  console.log(user, 'found from', query);
+  const correctPass = await user.comparePassword(auth[1]);
+  if (user && correctPass) {
+    return user;
+  }
 };
 
-// Compare a plain text password against the hashed one we have saved
+/**
+ * Compare a plain text password against the hashed one we have saved
+ * @password compares this user documents password to the passed in password
+ * @returns true if they match, false if not
+*/
 users.methods.comparePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
 
-// Generate a JWT from the user id and a secret
+/**
+ * Generates a new JWT for this user.
+ */
 users.methods.generateToken = function() {
   let tokenData = {
     id:this._id,

@@ -1,6 +1,13 @@
 'use strict';
 
-module.exports = (err, req, res, next) => {
+/**
+ * Handles errors by responding with the appropriate status code and message.
+ * @param {*} err the error
+ * @param {*} req the request
+ * @param {*} res the response
+ * @param {*} next function to call next middleware
+ */
+const handleError = (err, req, res, next) => {
   console.error('__SERVER_ERROR__', err);
   let error = { error: err.message || err };
   res.statusCode = err.status || 500;
@@ -9,3 +16,5 @@ module.exports = (err, req, res, next) => {
   res.write( JSON.stringify(error) );
   res.end();
 };
+
+module.exports = handleError;
